@@ -605,7 +605,8 @@ if __name__ == "__main__":
                 .format(population_decoded[index], evaluation[index] ))
     plotResults(best_fitness_values, mean_fitness_values, "Resultados usando "+schemas_selection[method] +" en cada generación")
 """
-def plotFinalResults(data, title, schema):
+def plotFinalResults(data, title, schema,color):
+    # data = [ [ key,[data_values] ] , ]
     x = [i for i in range(max_generations)]
     y = data[0]
     z = data[1]
@@ -972,20 +973,25 @@ if __name__ == "__main__":
     best = []
     mean = []
     for key in schemas_representation.keys():
-        count = 10
+        count = 2
         for i in range(count):
             solve_problem(key)
         sumas = []
         sumas1 = []
         #print(len(total_values[0]))
         for i in range(max_generations):
-            sumas.append((total_values[0][i]+total_values[1][i]+total_values[2][i]+total_values[3][i]+total_values[4][i]+total_values[5][i]+total_values[6][i]+total_values[7][i]+total_values[8][i]+total_values[9][i])/count)
-            sumas1.append((total_values1[0][i]+total_values1[1][i]+total_values1[2][i]+total_values1[3][i]+total_values1[4][i]+total_values1[5][i]+total_values1[6][i]+total_values1[7][i]+total_values1[8][i]+total_values1[9][i])/count)
+            sumaPBest=0
+            sumaPMean=0
+            for j in range(count):
+                 sumaPBest += total_values[j][i]
+                 sumaPMean += total_values1[j][i]
+            sumas.append(sumaPBest/count)
+            sumas1.append(sumaPMean/count)
         best.append((key,sumas))
         mean.append((key,sumas1))
         total_values = []
         total_values1 = []
     print("Total:")
-    print(len(best))
-    plotFinalResults(best,"Comparación de representaciones en 10 intentos (Mejor individuo)", schemas_representation)
-    plotFinalResults(mean,"Comparación de representaciones en 10 intentos (Promedio de población)",schemas_representation) 
+    print(type(best[0][1]))      
+    plotFinalResults(best,"Comparación de representaciones en 10 intentos (Mejor individuo)", schemas_representation,'b')
+    plotFinalResults(mean,"Comparación de representaciones en 10 intentos (Promedio de población)",schemas_representation,'r') 

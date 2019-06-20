@@ -24,7 +24,7 @@ Method schema:
     2 - Vasconcelos
     3 - SUS
 """
-method = 3
+method = 1
 schemas = {
     0:"AGS",
     1:"Torneo",
